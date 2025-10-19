@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
-// Small presentational pieces for the App: a header, a reusable ChatBox, and a footer/input bar.
-// These are lightweight, responsive, and use a calm color palette.
 
+// HeaderBar Component
 const HeaderBar = ({ title = '🧠 Nerd AI Tutor' }) => {
   const [hover, setHover] = useState(false);
 
-  // Inline style variables to keep the header self-contained and calm/academic
   const baseStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -28,62 +26,22 @@ const HeaderBar = ({ title = '🧠 Nerd AI Tutor' }) => {
     color: '#044b7f',
     fontWeight: 700,
     letterSpacing: '-0.2px',
-    fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial'
+    fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial'
   };
 
   return (
-    <>
-      <style>{`
-        :root{
-          --accent: #0563d0;
-          --muted: #6c7a86;
-          --bg-start: #eaf6ff;
-          --bg-end: #f2fbff;
-          --surface: #ffffff;
-          --radius: 12px;
-        }
-        /* global-ish calm, academic input/button styles */
-        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; color: #07263d; }
-        textarea, input[type="text"], input, button {
-          border-radius: var(--radius);
-          transition: box-shadow .18s ease, transform .12s ease, border-color .12s ease;
-          border: 1px solid rgba(6,30,60,0.06);
-          font-family: inherit;
-        }
-        textarea, input[type="text"] {
-          background: linear-gradient(180deg,#fff,#fbfeff);
-          padding: 10px 12px;
-          box-shadow: 0 6px 18px rgba(6,30,60,0.04);
-        }
-        textarea:focus, input:focus {
-          outline: none;
-          box-shadow: 0 8px 24px rgba(5,99,208,0.08);
-          border-color: var(--accent);
-        }
-        button {
-          background: linear-gradient(180deg,var(--accent), #085bb8);
-          color: #fff;
-          padding: 10px 14px;
-          border: none;
-          cursor: pointer;
-          font-weight: 600;
-          box-shadow: 0 6px 18px rgba(5,99,208,0.06);
-        }
-        button:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(5,99,208,0.08); }
-      `}</style>
-
-      <div
-        role="banner"
-        style={baseStyle}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        <h1 style={titleStyle}>{title}</h1>
-      </div>
-    </>
+    <div
+      role="banner"
+      style={baseStyle}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <h1 style={titleStyle}>{title}</h1>
+    </div>
   );
 };
 
+// ChatBox Component
 const ChatBox = ({ messages = [] }) => (
   <div
     role="log"
@@ -124,6 +82,7 @@ const ChatBox = ({ messages = [] }) => (
   </div>
 );
 
+// FooterBar Component
 const FooterBar = ({ value, onChange, onSubmit, placeholder = 'Ask your question...' }) => (
   <form
     onSubmit={onSubmit}
@@ -168,6 +127,8 @@ const FooterBar = ({ value, onChange, onSubmit, placeholder = 'Ask your question
     </button>
   </form>
 );
+
+// Main App Component
 function App() {
   const [message, setMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
@@ -175,115 +136,22 @@ function App() {
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim()) {
+      // Add user message
       setChatMessages([...chatMessages, { text: message, sender: 'user' }]);
       setMessage('');
-    }
-  };
-
-  const styles = {
-    container: {
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: '#f8f9fa'
-    },
-    header: {
-      padding: '1rem',
-      backgroundColor: '#ffffff',
-      borderBottom: '1px solid #e9ecef',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-    },
-    title: {
-      fontSize: '1.5rem',
-      color: '#2c3e50',
-      margin: 0,
-      fontWeight: '600'
-    },
-    chatArea: {
-      flex: 1,
-      padding: '1rem',
-      overflowY: 'auto',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1rem'
-    },
-    message: {
-      padding: '0.75rem 1rem',
-      borderRadius: '0.5rem',
-      maxWidth: '70%',
-      width: 'fit-content'
-    },
-    userMessage: {
-      backgroundColor: '#007bff',
-      color: 'white',
-      alignSelf: 'flex-end'
-    },
-    botMessage: {
-      backgroundColor: '#ffffff',
-      border: '1px solid #e9ecef',
-      alignSelf: 'flex-start'
-    },
-    inputArea: {
-      padding: '1rem',
-      backgroundColor: '#ffffff',
-      borderTop: '1px solid #e9ecef'
-    },
-    form: {
-      display: 'flex',
-      gap: '0.5rem'
-    },
-    input: {
-      flex: 1,
-      padding: '0.75rem',
-      borderRadius: '0.5rem',
-      border: '1px solid #e9ecef',
-      fontSize: '1rem'
-    },
-    button: {
-      padding: '0.75rem 1.5rem',
-      backgroundColor: '#007bff',
-      color: 'white',
-      border: 'none',
-      borderRadius: '0.5rem',
-      cursor: 'pointer',
-      fontSize: '1rem'
+      
+      // Optional: Add bot placeholder response
+      // setTimeout(() => {
+      //   setChatMessages(prev => [...prev, { text: "Thinking...", sender: 'bot' }]);
+      // }, 500);
     }
   };
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>🧠 Nerd AI Tutor</h1>
-      </header>
-
-      <main style={styles.chatArea}>
-        {chatMessages.map((msg, index) => (
-          <div
-            key={index}
-            style={{
-              ...styles.message,
-              ...(msg.sender === 'user' ? styles.userMessage : styles.botMessage)
-            }}
-          >
-            {msg.text}
-          </div>
-        ))}
-      </main>
-
-      <footer style={styles.inputArea}>
-        <form style={styles.form} onSubmit={handleSend}>
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Ask your question..."
-            style={styles.input}
-          />
-          <button type="submit" style={styles.button}>
-            Send
-          </button>
-        </form>
-      </footer>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f8f9fa' }}>
+      <HeaderBar />
+      <ChatBox messages={chatMessages} />
+      <FooterBar value={message} onChange={(e) => setMessage(e.target.value)} onSubmit={handleSend} />
     </div>
   );
 }
