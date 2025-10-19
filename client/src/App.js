@@ -3,22 +3,86 @@ import './App.css';
 // Small presentational pieces for the App: a header, a reusable ChatBox, and a footer/input bar.
 // These are lightweight, responsive, and use a calm color palette.
 
-const HeaderBar = ({ title = '🧠 Nerd AI Tutor' }) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '14px 18px',
-      background: 'linear-gradient(90deg,#eaf6ff,#f2fbff)',
-      boxShadow: '0 6px 20px rgba(10,40,80,0.06)',
-      borderBottomLeftRadius: 12,
-      borderBottomRightRadius: 12
-    }}
-  >
-    <h1 style={{ margin: 0, fontSize: 18, color: '#044b7f', fontWeight: 700 }}>{title}</h1>
-  </div>
-);
+const HeaderBar = ({ title = '🧠 Nerd AI Tutor' }) => {
+  const [hover, setHover] = useState(false);
+
+  // Inline style variables to keep the header self-contained and calm/academic
+  const baseStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '14px 18px',
+    background: 'linear-gradient(90deg,#eaf6ff,#f2fbff)',
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    border: '1px solid rgba(6,30,60,0.04)',
+    transition: 'transform 160ms ease, box-shadow 160ms ease',
+    transform: hover ? 'translateY(-3px)' : 'none',
+    boxShadow: hover ? '0 10px 30px rgba(5,99,208,0.08)' : '0 6px 20px rgba(10,40,80,0.06)',
+    cursor: 'default'
+  };
+
+  const titleStyle = {
+    margin: 0,
+    fontSize: 18,
+    color: '#044b7f',
+    fontWeight: 700,
+    letterSpacing: '-0.2px',
+    fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial'
+  };
+
+  return (
+    <>
+      <style>{`
+        :root{
+          --accent: #0563d0;
+          --muted: #6c7a86;
+          --bg-start: #eaf6ff;
+          --bg-end: #f2fbff;
+          --surface: #ffffff;
+          --radius: 12px;
+        }
+        /* global-ish calm, academic input/button styles */
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; color: #07263d; }
+        textarea, input[type="text"], input, button {
+          border-radius: var(--radius);
+          transition: box-shadow .18s ease, transform .12s ease, border-color .12s ease;
+          border: 1px solid rgba(6,30,60,0.06);
+          font-family: inherit;
+        }
+        textarea, input[type="text"] {
+          background: linear-gradient(180deg,#fff,#fbfeff);
+          padding: 10px 12px;
+          box-shadow: 0 6px 18px rgba(6,30,60,0.04);
+        }
+        textarea:focus, input:focus {
+          outline: none;
+          box-shadow: 0 8px 24px rgba(5,99,208,0.08);
+          border-color: var(--accent);
+        }
+        button {
+          background: linear-gradient(180deg,var(--accent), #085bb8);
+          color: #fff;
+          padding: 10px 14px;
+          border: none;
+          cursor: pointer;
+          font-weight: 600;
+          box-shadow: 0 6px 18px rgba(5,99,208,0.06);
+        }
+        button:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(5,99,208,0.08); }
+      `}</style>
+
+      <div
+        role="banner"
+        style={baseStyle}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        <h1 style={titleStyle}>{title}</h1>
+      </div>
+    </>
+  );
+};
 
 const ChatBox = ({ messages = [] }) => (
   <div

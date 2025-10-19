@@ -1,5 +1,40 @@
 import React, { useState } from "react";
+const [subject, setSubject] = useState("Math");
+const SUBJECTS = ["Math", "Science", "English"];
 
+/* JSX you can place above the textarea input (inside the return) */
+const subjectDropdown = (
+  <div style={{ marginBottom: 8 }}>
+    <label style={{ display: "block", fontSize: 13, color: "#374151", marginBottom: 6 }}>
+      Subject
+    </label>
+    <select
+      value={subject}
+      onChange={(e) => setSubject(e.target.value)}
+      style={{
+        width: "100%",
+        padding: "8px 10px",
+        fontSize: 15,
+        borderRadius: 8,
+        border: "1px solid #e5e7eb",
+        boxShadow: "0 2px 8px rgba(2,6,23,0.04)",
+        background: "#fff",
+      }}
+      disabled={loading}
+    >
+      {SUBJECTS.map((s) => (
+        <option key={s} value={s}>
+          {s}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
+/* Update your API request bodies to include subject:
+   - fetch: JSON.stringify({ question: trimmed, subject })
+   - axios.post: { query: trimmed, subject }
+*/
 export default function ChatBox() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState(null);
