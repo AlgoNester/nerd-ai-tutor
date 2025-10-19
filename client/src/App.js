@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// HeaderBar Component
+
 const HeaderBar = ({ title = '🧠 Nerd AI Tutor' }) => {
   const [hover, setHover] = useState(false);
 
@@ -41,7 +41,8 @@ const HeaderBar = ({ title = '🧠 Nerd AI Tutor' }) => {
   );
 };
 
-// ChatBox Component
+// Create a ChatBox component that lets students ask academic questions
+// (Math, Science, or English) and displays AI responses clearly.
 const ChatBox = ({ messages = [] }) => (
   <div
     role="log"
@@ -82,7 +83,6 @@ const ChatBox = ({ messages = [] }) => (
   </div>
 );
 
-// FooterBar Component
 const FooterBar = ({ value, onChange, onSubmit, placeholder = 'Ask your question...' }) => (
   <form
     onSubmit={onSubmit}
@@ -128,7 +128,6 @@ const FooterBar = ({ value, onChange, onSubmit, placeholder = 'Ask your question
   </form>
 );
 
-// Main App Component
 function App() {
   const [message, setMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
@@ -136,14 +135,13 @@ function App() {
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim()) {
-      // Add user message
       setChatMessages([...chatMessages, { text: message, sender: 'user' }]);
       setMessage('');
-      
-      // Optional: Add bot placeholder response
-      // setTimeout(() => {
-      //   setChatMessages(prev => [...prev, { text: "Thinking...", sender: 'bot' }]);
-      // }, 500);
+
+      // Example AI response placeholder
+      setTimeout(() => {
+        setChatMessages(prev => [...prev, { text: `AI Response: Let's explore that topic!`, sender: 'bot' }]);
+      }, 600);
     }
   };
 
